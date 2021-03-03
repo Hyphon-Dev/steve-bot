@@ -2,6 +2,7 @@ const { MessageEmbed } = require("discord.js")
 const fetch = require('node-fetch');
 const chalk = require('chalk');
 const log = console.log;
+const { sendError } = require('../util/functions')
 
 exports.execute = (client, message, args) => {
     const skinEmbed = new MessageEmbed()
@@ -12,7 +13,7 @@ exports.execute = (client, message, args) => {
     .then(res => res.json())
     .then(json => {
         if (json.code == 'minecraft.api_failure') {
-            return message.channel.send(`It seems the username ${args[0]} does not exist!`)
+            sendError('The username ' + args[0] + ' does not exist!', message.channel)
         } 
         skinEmbed.setTitle(`${args[0]}'s Avatar`)
         skinEmbed.setImage("https://mc-heads.net/body/" + json.data.player.id)
