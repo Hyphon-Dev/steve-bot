@@ -7,6 +7,7 @@ exports.sendError = (err, channel) => {
     .setTitle('❌ERROR')
     .setFooter('steve bot')
     .setDescription('An error has occurred!')
+    .addField('Error:', err)
     .setTimestamp()
     channel.send(errorEmbed)
 }
