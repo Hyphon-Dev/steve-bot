@@ -10,17 +10,14 @@ exports.execute = (client, message, args) => {
         if(json.ip == "") {
             return sendError('The ip or hostname ' + args[0] + " doesn't exits!")
         } else {
-            fetch('https://api.mcsrvstat.us/icon/' + args[0])
-            .then(pic => {
             const ServerEmbed = new MessageEmbed()
             .setTitle(`${args[0]}'s server info`)
-            .setThumbnail(pic)
+            .setThumbnail('https://api.mcsrvstat.us/icon/' + args[0])
             .addField('Hostname:', json.hostname)
             .addField('Version:', json.version)
             .addField('Players:', `${json.players.online}/${json.players.max}`)
             .addField('MOTD:', json.motd.clean)
-            message.channel.send(ServerEmbed)
-            }
+            message.channel.send(ServerEmbed
         )}
     })
 }
