@@ -9,6 +9,7 @@ client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 client.db = db;
 client.config = config;
+client.queue = new Map();
 client.shop = {
     "diamond": {
         price: 500,
@@ -16,12 +17,18 @@ client.shop = {
     }
 }
 
+//
+client.on("warn", (info) => console.log(info));
+client.on("error", console.error);
+// 
+
 fs.readdir("./events/", (err, files) => {
     if (err) return console.error(err);
     files.forEach(f => {
         if (!f.endsWith(".js")) return;
         const event = require(`./events/${f}`);
         let eventName = f.split(".")[0];
+        log(chalk.bgYellow.bold.black(`Attempting to load the event ${eventName}.`))
         client.on(eventName, event.bind(null, client));
     });
 });
@@ -32,7 +39,7 @@ fs.readdir("./commands/", (err, files) => {
         if (!f.endsWith(".js")) return;
         let command = require(`./commands/${f}`);
         client.commands.set(command.help.name, command); 
-        log(chalk.bgYellow.bold.black(`Attempting to load ${command.help.name}.`))
+        log(chalk.bgYellow.bold.black(`Attempting to load the command ${command.help.name}.`))
         command.help.aliases.forEach(alias => {
             client.aliases.set(alias, command.help.name);
         });
