@@ -1,8 +1,10 @@
+const { sendError } = require("../util/functions");
+
 exports.execute = async(client, message, args) => {
     const channel = message.member.voice.channel;
-    if (!channel) return message.channel.send('You should join a voice channel before using this command!');
+    if (!channel) return sendError('You should join a voice channel before using this command!', message.channel);
     const queue = message.client.queue.get(message.guild.id)
-    if(!queue) return message.channel.send('There are no songs in queue to shuffle')
+    if(!queue) return sendError('There are no songs in queue to shuffle', message.channel)
     let songs = queue.songs;
     for (let i = songs.length - 1; i > 1; i--) {
       let j = 1 + Math.floor(Math.random() * i);

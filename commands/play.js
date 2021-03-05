@@ -1,15 +1,16 @@
 const ytdl = require('ytdl-core-discord');
 var scrapeYt = require("scrape-yt");
-const discord = require('discord.js')
+const discord = require('discord.js');
+const { sendError } = require('../util/functions');
 
 exports.execute = async (client, message, args) => {
 
-    if(!args[0]) return message.channel.send('You didn\'t provide a song to play!')
+    if(!args[0]) return sendError('You didn\'t provide a song to play!', message.channel)
     let channel = message.member.voice.channel;
-    if(!channel) return message.channel.send('You need to join a voice channel to play a music!')
+    if(!channel) return sendError('You need to join a voice channel to play a music!', message.channel)
 
-    if (!channel.permissionsFor(message.client.user).has("CONNECT")) return message.channel.send('I don\'t have permission to join the voice channel')
-    if (!channel.permissionsFor(message.client.user).has("SPEAK"))return message.channel.send('I don\'t have permission to speak in the voice channel')
+    if (!channel.permissionsFor(message.client.user).has("CONNECT")) return sendError('I don\'t have permission to join the voice channel', message.channel)
+    if (!channel.permissionsFor(message.client.user).has("SPEAK"))return sendError('I don\'t have permission to speak in the voice channel', message.channel)
 
 
     const server = message.client.queue.get(message.guild.id);
@@ -98,7 +99,7 @@ exports.execute = async (client, message, args) => {
         console.error(`I could not join the voice channel`);
         message.client.queue.delete(message.guild.id);
         await channel.leave();
-        return message.channel.send(`I could not join the voice channel: ${error}`);
+        return sendError(`I could not join the voice channel: ${error}`, message.channel);
     }
 }
 

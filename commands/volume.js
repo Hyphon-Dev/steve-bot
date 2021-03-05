@@ -1,6 +1,8 @@
+const { sendError } = require("../util/functions");
+
 exports.execute = async(client, message, args) => {
     const channel = message.member.voice.channel;
-    if (!channel) return message.channel.send('You should join a voice channel before using this command!');
+    if (!channel) return sendError('You should join a voice channel before using this command!', message.channel);
 
     let queue = message.client.queue.get(message.guild.id)
 
@@ -10,7 +12,7 @@ exports.execute = async(client, message, args) => {
         }
     })
 
-    if(args[0] > 10) return message.channel.send('Well lets hope we meet in heaven :grin:')
+    if(args[0] > 10) return sendError('You can only change the volume from 1/10!', message.channel)
 
     queue.connection.dispatcher.setVolumeLogarithmic(args[0] / 5);
     queue.volume = args[0]

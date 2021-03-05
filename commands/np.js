@@ -1,13 +1,10 @@
-const { MessageEmbed } = require('discord.js')
+const { MessageEmbed } = require('discord.js');
+const { sendError } = require('../util/functions');
 exports.execute = async(client, message) => {
     const channel = message.member.voice.channel;
-    if (!channel) return message.channel.send('You should join a voice channel before using this command!');
+    if (!channel) return sendError('You should join a voice channel before using this command!', message.channel);
     let queue = message.client.queue.get(message.guild.id)
-    if(!queue) return message.channel.send({
-        embed:{
-            title: 'There is nothing playing right now!'
-        }
-    })
+    if(!queue) return sendError('There is nothing playing right now!', message.channel)
     message.channel.send({
         embed:{
             title: 'Now Playing',
