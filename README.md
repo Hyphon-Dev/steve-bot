@@ -4,7 +4,9 @@ This is Steve Bot a **work in progress** discord bot wroten in JavaScript
 
 ## Features To Come
 *Moderation*
+
 *Economy Game*
+
 *better README file*
 
 ## 🤝 Contributing
