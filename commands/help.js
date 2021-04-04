@@ -81,7 +81,7 @@ exports.execute = (client, message, args) => {
                 })
                 .catch(collected => {
                     console.log(`After a minute, only ${collected.size} out of 4 reacted.`);
-                    m.reply('you didn\'t react with neither a thumbs up, nor a thumbs down.');
+                    m.reply('Reaction Timeout!');
                 });
             }
         )}
