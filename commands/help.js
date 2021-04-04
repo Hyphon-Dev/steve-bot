@@ -28,7 +28,7 @@ exports.execute = (client, message, args) => {
             const filter = (reaction, user) => {
                 return [`🤖`, `⛏`, `🎴`, `🔨`, `🎶`].includes(reaction.emoji.name) && user.id === message.author.id;
             };
-            m.Reactions(filter, { max: 1, time: 60000, errors: ['time'] })
+            m.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
                 .then(collected => {
                     const reaction = collected.first();
             
